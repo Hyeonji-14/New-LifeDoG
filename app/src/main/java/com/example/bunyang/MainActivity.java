@@ -1,5 +1,7 @@
 package com.example.bunyang;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -65,24 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-    @Override
-    public void onBackPressed() {
-        for (Fragment fragment : fragmentManager.getFragments()) {
-            if (fragment instanceof PostFragment) {
-                if (fragment.isVisible()) {
-                    super.onBackPressed();
-                    return;
-                }
-            }
-        }
-
-        if (System.currentTimeMillis() > backpressedTime + 2000) {
-            backpressedTime = System.currentTimeMillis();
-            Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
-        } else if (System.currentTimeMillis() <= backpressedTime + 2000) {
-            finish();
-        }
 
     }
 }

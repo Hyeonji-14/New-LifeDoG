@@ -176,15 +176,6 @@ public class HomeFragment extends Fragment {
                             }
                             dataList.add(dog);
 
-
-//                            Fragment AdapterFragment = new PostFragment();
-//                            Bundle bundle = new Bundle();
-//                            bundle.putSerializable("dog", dog);
-//                            bundle.putString("id", getActivity().getIntent().getStringExtra("id"));
-
-//                            AdapterFragment.setArguments(bundle);
-
-
                         }
                         dataAdapter.setDogs(dataList);
                         dataAdapter.notifyDataSetChanged();
@@ -221,7 +212,7 @@ public class HomeFragment extends Fragment {
                 postFragment.setArguments(bundle);
                 bundle.putString("name", getActivity().getIntent().getStringExtra("name"));
                 bundle.putString("emailId", getActivity().getIntent().getStringExtra("emailId"));
-                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.framelay, postFragment).commitAllowingStateLoss();
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.framelay, postFragment).commitAllowingStateLoss();
             }
         });
 
@@ -229,13 +220,14 @@ public class HomeFragment extends Fragment {
         point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelay, new WriteFragment()).commitAllowingStateLoss();
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.framelay, new WriteFragment()).commitAllowingStateLoss();
 
             }
         });
 
 
         return v;
+
 
     }
 
@@ -248,4 +240,6 @@ public class HomeFragment extends Fragment {
 //        DataList.add(new Data(R.drawable.dog, "강아지2"));
 //        DataList.add(new Data(R.drawable.dog, "강아지3"));
     }
+
+
 }

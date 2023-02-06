@@ -106,10 +106,14 @@ public class PostFragment extends Fragment {
                 post_email = (TextView) v.findViewById(R.id.post_email);
                 post_email.setText("이메일 : " + getArguments().getString("emailId"));
 
+                Fragment homeFragment = new HomeFragment();
+
                 back.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getActivity().onBackPressed();
+//
+//                      getActivity().onBackPressed();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelay, homeFragment).commitAllowingStateLoss();
                     }
 
                 });

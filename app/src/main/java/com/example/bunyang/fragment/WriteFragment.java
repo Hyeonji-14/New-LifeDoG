@@ -194,7 +194,7 @@ public class WriteFragment extends Fragment {
                 StorageReference riversRef = storageRef.child(stoUrl);
                 UploadTask uploadTask = riversRef.putFile(imageUri);
 
-                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.framelay, homefragment).commitAllowingStateLoss();
+                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.framelay, homefragment).commitAllowingStateLoss();
             }
         });
 
