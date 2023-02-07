@@ -45,15 +45,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/myname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/mono"
-                    android:text="이름 : " />
-
-                <TextView
                     android:id="@+id/myemail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -14,6 +14,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +45,7 @@ public class WriteFragment extends Fragment {
 
     Uri imageUri;
 
-    ImageButton write, photo;
+    ImageButton write, photo, back2;
     ImageView photoView;
     ArrayAdapter<CharSequence> dog1, dog2, dog3, dog4, dog5, dog6;
 
@@ -66,7 +68,6 @@ public class WriteFragment extends Fragment {
 
 
     private int id;
-    private Fragment homeFragment;
 
 
     public WriteFragment() {
@@ -103,8 +104,11 @@ public class WriteFragment extends Fragment {
 
         write = (ImageButton) v.findViewById(R.id.write);
         photo = (ImageButton) v.findViewById(R.id.photo);
+        back2 = (ImageButton) v.findViewById(R.id.back2);
         photoView = (ImageView) v.findViewById(R.id.photo_view);
         c = container.getContext();
+
+        Fragment homeFragment = new HomeFragment();
 
         spin1 = (Spinner) v.findViewById(R.id.spinner);
         spin2 = (Spinner) v.findViewById(R.id.spinner2);
@@ -139,6 +143,8 @@ public class WriteFragment extends Fragment {
         dog6.setDropDownViewResource(R.layout.spinner);
         spin6.setAdapter(dog6);
 
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
 
         mDatabaseRef.child("Dog").orderByValue().addValueEventListener(new ValueEventListener() {
             @Override
@@ -147,13 +153,10 @@ public class WriteFragment extends Fragment {
                     Dog dog = item.getValue(Dog.class);
                     id = dog.getId() + 1;
                 }
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -170,7 +173,6 @@ public class WriteFragment extends Fragment {
         write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment homefragment = new HomeFragment();
                 Dog dog = new Dog();
 
                 dog.setId(id);
@@ -187,19 +189,26 @@ public class WriteFragment extends Fragment {
                 dog.setSpin6("" + spin6.getSelectedItem());
                 dog.setContent("" + inputEdit.getText().toString());
                 dog.setImageUrl("" + imgUrl);
-                //dog.setImageUrl("" + );
                 mDatabaseRef.child("Dog").child("" + id).setValue(dog);
 
                 StorageReference storageRef = mstorageRef.getReference();
                 StorageReference riversRef = storageRef.child(stoUrl);
                 UploadTask uploadTask = riversRef.putFile(imageUri);
 
-                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.framelay, homefragment).commitAllowingStateLoss();
+                transaction.addToBackStack(null).replace(R.id.framelay, homeFragment).commitAllowingStateLoss();
+            }
+        });
+
+        back2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transaction.replace(R.id.framelay, homeFragment).commitAllowingStateLoss();
             }
         });
 
         return v;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -219,8 +228,8 @@ public class WriteFragment extends Fragment {
         }
     }
 
-    private void uploadToFirebase(Uri uri) {
+
+    private void uploadToFirebase(Uri uri) {}
 
 
-    }
 }

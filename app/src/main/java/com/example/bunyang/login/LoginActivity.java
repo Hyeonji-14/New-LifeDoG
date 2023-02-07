@@ -75,20 +75,15 @@ public class LoginActivity extends AppCompatActivity {
                             mDatabaseRef.child("User").child(mFirebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Log.e("asd", "" + snapshot);
                                     String name = "";
                                     String emailId = "";
                                     for (DataSnapshot item : snapshot.getChildren()) {
                                         String str = "" + item.getValue();
-                                        if (item.getKey().equals("name")) {
-                                            name = (String) item.getValue();
-                                        }
                                         if (item.getKey().equals("emailId")) {
                                             emailId = (String) item.getValue();
                                         }
 
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        intent.putExtra("name", "" + name);
                                         intent.putExtra("emailId", "" + emailId);
                                         startActivity(intent);
                                         finish(); // 액티비티 파괴

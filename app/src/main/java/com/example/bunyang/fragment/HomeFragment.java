@@ -193,26 +193,22 @@ public class HomeFragment extends Fragment {
 
         ListView listView = (ListView) v.findViewById(R.id.listview);
         dataAdapter = new DataAdapter(getActivity());
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         listView.setAdapter(dataAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                //Bundle bundle = new Bundle();
-                //bundle.putString("name",edit.getText().toString());
-//                Toast.makeText(c.getApplicationContext(),
-//                        dataAdapter.getItem(position).getSpin1(),
-//                        Toast.LENGTH_LONG).show();
+
                 Fragment postFragment = new PostFragment();
                 Bundle bundle = new Bundle();
                 Dog dog = dataAdapter.getItem(position);
 
                 bundle.putSerializable("dog", dog);
                 postFragment.setArguments(bundle);
-                bundle.putString("name", getActivity().getIntent().getStringExtra("name"));
                 bundle.putString("emailId", getActivity().getIntent().getStringExtra("emailId"));
-                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.framelay, postFragment).commitAllowingStateLoss();
+                transaction.replace(R.id.framelay, postFragment).commitAllowingStateLoss();
             }
         });
 
@@ -220,7 +216,7 @@ public class HomeFragment extends Fragment {
         point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.framelay, new WriteFragment()).commitAllowingStateLoss();
+                transaction.replace(R.id.framelay, new WriteFragment()).commitAllowingStateLoss();
 
             }
         });

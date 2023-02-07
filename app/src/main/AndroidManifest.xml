@@ -16,7 +16,8 @@
         <activity android:name=".login.SignActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity
-            android:name=".MainActivity" />
+            android:name=".MainActivity"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".splash.SplashActivity"
             android:exported="true">

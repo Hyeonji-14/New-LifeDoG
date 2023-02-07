@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.mypage:
                         Bundle bundle = new Bundle();
-                        bundle.putString("name", getIntent().getStringExtra("name"));
                         bundle.putString("emailId", getIntent().getStringExtra("emailId"));
                         mypageFragment.setArguments(bundle);
                         transaction.replace(R.id.framelay, mypageFragment).commitAllowingStateLoss();

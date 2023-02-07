@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,9 +46,8 @@ public class PostFragment extends Fragment {
 
     ImageView photo_view2;
     TextView post_lead;
-    Button back;
+    ImageButton back;
 
-    private TextView post_id;
     private TextView post_email;
 
     private static final String ARG_PARAM1 = "param1";
@@ -79,8 +80,7 @@ public class PostFragment extends Fragment {
         Dog dog = (Dog) getArguments().getSerializable("dog");
         String data = "photo/" + dog.getId();
 
-        Log.e("test", "" + data);
-        // Inflate the layout for this fragment
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://projectk-5e444.appspot.com/");
         StorageReference storageRef = storage.getReference();
@@ -96,12 +96,9 @@ public class PostFragment extends Fragment {
 
                 Glide.with(getActivity()).load(uri).into(photo_view2);
                 post_lead = (TextView) v.findViewById(R.id.post_lead);
-                back = (Button) v.findViewById(R.id.back);
+                back = (ImageButton) v.findViewById(R.id.back);
 
                 post_lead.setText(dog.getSpin1() + " / " + dog.getContent() );
-
-                post_id = (TextView) v.findViewById(R.id.post_id);
-                post_id.setText("작성자 : " + getArguments().getString("name"));
 
                 post_email = (TextView) v.findViewById(R.id.post_email);
                 post_email.setText("이메일 : " + getArguments().getString("emailId"));
@@ -111,14 +108,10 @@ public class PostFragment extends Fragment {
                 back.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//
-//                      getActivity().onBackPressed();
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelay, homeFragment).commitAllowingStateLoss();
+                        transaction.replace(R.id.framelay, homeFragment).commitAllowingStateLoss();
                     }
 
                 });
-
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

@@ -25,7 +25,6 @@ public class MypageFragment extends Fragment {
     ImageView profile;
 
     private TextView myEmail;
-    private TextView myName;
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -63,9 +62,6 @@ public class MypageFragment extends Fragment {
 
         profile = v.findViewById(R.id.profile);
         photo_click = v.findViewById(R.id.photo_click);
-
-        myName = (TextView) v.findViewById(R.id.myname);
-        myName.setText("이름 : " + getArguments().getString("name"));
 
         myEmail = (TextView) v.findViewById(R.id.myemail);
         myEmail.setText("이메일 : " + getArguments().getString("emailId"));
